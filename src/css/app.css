@@ -835,7 +835,7 @@ a[href^="tel"] {
       font: 18px sans-serif; }
   .MainContent .link {
     fill: none;
-    stroke: #ccc;
+    stroke: #000;
     stroke-dasharray: 4;
     stroke-width: 1.5px; }
 
