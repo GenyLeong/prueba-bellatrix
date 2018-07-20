@@ -21,7 +21,7 @@ var gulp = require('gulp'),
 
 gulp.task('web', function() {
   browserSync.init({
-    port: 8080,
+    port: 8082,
     server: {
       baseDir: "./src/"
     }

@@ -818,26 +818,21 @@ a[href^="tel"] {
   .MainContent-content {
     max-width: 800px;
     margin: auto; }
-  .MainContent .bs-sidebar .nav > .active > ul {
-    display: block;
-    margin-bottom: 8px; }
-  .MainContent text.shadow {
-    stroke: white;
-    stroke-width: 2.3px;
-    opacity: 0.5; }
-  .MainContent .node {
-    cursor: pointer; }
-    .MainContent .node circle {
-      fill: #fff;
-      stroke: steelblue;
-      stroke-width: 1.5px; }
-    .MainContent .node text {
-      font: 18px sans-serif; }
   .MainContent .link {
     fill: none;
-    stroke: #000;
-    stroke-dasharray: 4;
+    stroke: #666;
     stroke-width: 1.5px; }
+  .MainContent .node circle {
+    fill: #ccc;
+    stroke: #fff;
+    stroke-width: 1.5px; }
+  .MainContent text {
+    font: 10px sans-serif;
+    pointer-events: none; }
+  .MainContent #area2 svg {
+    overflow: unset;
+    -ms-touch-action: none;
+        touch-action: none; }
 
 .tip {
   position: absolute;
@@ -851,7 +846,7 @@ a[href^="tel"] {
   left: 0;
   visibility: hidden;
   font-size: 14px;
-  max-width: 360px; }
+  max-width: 180px; }
   .tip p {
     margin: 0;
     font-size: 13px; }
