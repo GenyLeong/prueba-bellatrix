@@ -19,63 +19,35 @@
     max-width: 800px;
     margin: auto;
   }
-  .link {
-    fill: none;
-    stroke: #666;
-    stroke-width: 1.5px;
-  }
-  
-  .node circle {
-    fill: #ccc;
-    stroke: #fff;
-    stroke-width: 1.5px;
-  }
-  
-  text {
-    font: 10px sans-serif;
-    pointer-events: none;
-  }
 
-// .bs-sidebar .nav > .active > ul {
-//   display: block;
-//   margin-bottom: 8px;
-// }
+ .link {
+  fill: none;
+  stroke: #666;
+  stroke-width: 1.5px;
+}
 
-// text.shadow {
-//   stroke: white;
-//   stroke-width: 2.3px;
-//   opacity: 0.5;
-// }
+circle {
+  fill: #ccc;
+  stroke: #fff;
+  stroke-width: 1.5px;
+}
 
-// .node {
-//   cursor: pointer;
-//   circle {
-//     fill: #fff;
-//     stroke: steelblue;
-//     stroke-width: 1.5px;
-//   }
-//   text {
-//     font: 15px sans-serif;
-//   }
-//   @include breakpoint(phablet) {
-//     text {
-//       font: 18px sans-serif;
-//     }
-//   }
-// }
+text {
+  fill: #000;
+  font: 13px sans-serif;
+  pointer-events: none;
+}
 
-// .link {
-//   fill: none;
-//   stroke: #000;
-//   stroke-dasharray: 4;
-//   stroke-width: 1.5px;
-// }
 #area2{
   svg{
     overflow: unset;
     touch-action: none;
   }
 }
+}
+
+.image{
+  cursor:pointer;
 }
 
 .tip {

@@ -822,17 +822,21 @@ a[href^="tel"] {
     fill: none;
     stroke: #666;
     stroke-width: 1.5px; }
-  .MainContent .node circle {
+  .MainContent circle {
     fill: #ccc;
     stroke: #fff;
     stroke-width: 1.5px; }
   .MainContent text {
-    font: 10px sans-serif;
+    fill: #000;
+    font: 13px sans-serif;
     pointer-events: none; }
   .MainContent #area2 svg {
     overflow: unset;
     -ms-touch-action: none;
         touch-action: none; }
+
+.image {
+  cursor: pointer; }
 
 .tip {
   position: absolute;
