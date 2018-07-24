@@ -22,8 +22,8 @@
 
  .link {
   fill: none;
-  stroke: #666;
-  stroke-width: 1.5px;
+  stroke: #ff7070;
+  stroke-width: 1px;
 }
 
 circle {
@@ -33,7 +33,7 @@ circle {
 }
 
 text {
-  fill: #000;
+  fill: #6b6b6b;
   font: 13px sans-serif;
   pointer-events: none;
 }
@@ -51,18 +51,19 @@ text {
 }
 
 .tip {
-  position: absolute;
-  background: #333;
-  color: white;
-  padding: 6px 10px;
-  border-radius: 5px;
-  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
-  text-align: left;
-  top: 0;
-  left: 0;
-  visibility: hidden;
-  font-size:14px;
-  max-width:180px;
+    position: absolute;
+    background: #000000d9;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
+    text-align: left;
+    top: 0;
+    left: 0;
+    right: 0;
+    visibility: hidden;
+    font-size: 14px;
+    max-width: 180px;
   p{
     margin:0;
     font-size:13px;

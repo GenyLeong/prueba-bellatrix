@@ -820,14 +820,14 @@ a[href^="tel"] {
     margin: auto; }
   .MainContent .link {
     fill: none;
-    stroke: #666;
-    stroke-width: 1.5px; }
+    stroke: #ff7070;
+    stroke-width: 1px; }
   .MainContent circle {
     fill: #ccc;
     stroke: #fff;
     stroke-width: 1.5px; }
   .MainContent text {
-    fill: #000;
+    fill: #6b6b6b;
     font: 13px sans-serif;
     pointer-events: none; }
   .MainContent #area2 svg {
@@ -840,14 +840,15 @@ a[href^="tel"] {
 
 .tip {
   position: absolute;
-  background: #333;
+  background: #000000d9;
   color: white;
   padding: 6px 10px;
   border-radius: 5px;
-  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
   text-align: left;
   top: 0;
   left: 0;
+  right: 0;
   visibility: hidden;
   font-size: 14px;
   max-width: 180px; }

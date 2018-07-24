@@ -25,7 +25,7 @@ var force = d3.layout.force()
     .nodes(d3.values(nodes))
     .links(links)
     .size([width, height])
-    .linkDistance(200)
+    .linkDistance(height /4)
     .charge(-300)
     .theta(1)
     .gravity(0.03)
@@ -34,7 +34,7 @@ var force = d3.layout.force()
 
 var svg = d3.select("#area2").append("svg")
     .attr("width", width)
-    .attr("height", height);
+    .attr("height", height)
 
 var tip = d3.select("body")
         .append("div")
@@ -47,7 +47,7 @@ var tip = d3.select("body")
           for (var i = 0; i < jsond3.length; i++) {
             if(d.index == i){
 
-          var html = jsond3[i].type
+          var html = d.name+ ":<br>" +jsond3[i].type
 
           tip.html(html);
     
@@ -60,10 +60,12 @@ var tip = d3.select("body")
           }
           tip.attr('style', `visibility: visible; left: ${posX}px; top: ${posY}px`);
         };
-      }    
+      }
+      force.stop()    
     }
         tip.hide = function(){
           tip.style("visibility", "hidden");
+          force.start()  
         }
 
 // build the arrow.
@@ -77,8 +79,9 @@ svg.append("svg:defs").selectAll("marker")
     .attr("markerWidth", 6)
     .attr("markerHeight", 6)
     .attr("orient", "auto")
-  .append("svg:path")
-    .attr("d", "M0,-5L10,0L0,5");
+    .append("svg:path")
+    .attr("d", "M0,-5L10,0L0,5")
+    
 
 // add the links and the arrows
 var path = svg.append("svg:g").selectAll("path")
@@ -115,14 +118,13 @@ node.append("image")
           .attr("height", 16)
           .on("mouseover", tip.show)
           .on("mouseout", tip.hide)
-          // .on("click", click)
-
 
 // add the text 
 node.append("text")
     .attr("x", 12)
     .attr("dy", ".35em")
-    .text(function(d) { return d.name; });
+    .text(function(d) { return d.name; })
+
 
 // add the curvy lines
 function tick() {
@@ -140,7 +142,8 @@ function tick() {
 
     node
         .attr("transform", function(d) { 
-  	    return "translate(" + d.x + "," + d.y + ")"; });
+          return "translate(" + d.x + "," + d.y + ")"; })        
 }
+
 
 })();
