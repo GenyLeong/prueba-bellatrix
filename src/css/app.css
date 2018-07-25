@@ -811,12 +811,10 @@ a[href^="tel"] {
  * MainContent
 ----------------------------------------------------------------------------*/
 .MainContent {
-  max-width: 960px;
   margin: auto; }
   .MainContent.is-visible {
     display: block; }
   .MainContent-content {
-    max-width: 800px;
     margin: auto; }
   .MainContent .link {
     fill: none;
