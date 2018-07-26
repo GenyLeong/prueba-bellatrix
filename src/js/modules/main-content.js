@@ -25,7 +25,7 @@ var force = d3.layout.force()
     .nodes(d3.values(nodes))
     .links(links)
     .size([width/2, height/2])
-    .linkDistance(width/2)
+    .linkDistance(width/4)
     .linkStrength(0.1)
     .charge(-60)
     .gravity(0.02)
@@ -40,7 +40,7 @@ var tip = d3.select("#area2")
         .append("div")
         .attr("class", "tip");
     
-        tip.show = function(d){
+        tip.show = function(d) {
           var posX = d3.event.pageX,
               posY = d3.event.pageY - 20; // right: -10
 
@@ -63,10 +63,11 @@ var tip = d3.select("#area2")
       }
       force.stop()         
     }
-        tip.hide = function(){
-          tip.style("visibility", "hidden");
-          force.start()  
-        }
+
+    tip.hide = function(){
+        tip.style("visibility", "hidden");
+        force.start()  
+    }
 
 // build the arrow.
 // svg.append("svg:defs").selectAll("marker")
@@ -86,19 +87,18 @@ var tip = d3.select("#area2")
 // add the links and the arrows
 var path = svg.append("svg:g").selectAll("path")
     .data(force.links())
-  .enter().append("svg:path")
-//    .attr("class", function(d) { return "link " + d.type; })
+    .enter().append("svg:path")
     .attr("class", function(d) { return "link " + d.source.parent})
-    .attr("marker-end", "url(#end)");
 
     console.log(force.links())
+    
 // define the nodes
 var node = svg.selectAll(".node")
     .data(force.nodes())
     .enter()
     .append("g")
     .attr("class", "node")    
-    .call(force.drag);
+    .call(force.drag)
 
 node.append("image")
         //   .attr("xlink:href", function(d){              
@@ -133,8 +133,8 @@ node.append("text")
 // add the curvy lines
 function tick() {
     path.attr("d", function(d) {
-        var dx = d.target.x - d.source.x,
-            dy = d.target.y - d.source.y,
+        var dx =  d.source.x - d.target.x,
+            dy = d.source.y - d.target.y,
             dr = Math.sqrt(dx * dx + dy * dy);
         return "M" + 
             d.source.x + "," + 
@@ -149,12 +149,14 @@ function tick() {
           return "translate(" + d.x + "," + d.y + ")"; })        
 }
 
-function click(d){
-    d3.selectAll(".link"+ "."+d.parent).style("stroke", "black")
+function click(d) {
+    // while (d.parent) {
+    //     d3.selectAll(".link").classed("link-click", false);
+    //     d3.selectAll(".link"+ "."+d.parent).classed("link-click", true);        
+    //     d = d.parent;
+    // }
+    console.log($(this).prev())
 
-    console.log(path[0])
-    console.log(d.parent)
-    
 }
 
 })();

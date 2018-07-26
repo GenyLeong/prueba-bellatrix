@@ -26,6 +26,11 @@
   stroke-width: 1px;
 }
 
+.link-click{
+  stroke: #000;
+  stroke-width: 2px;
+}
+
 circle {
   fill: #ccc;
   stroke: #fff;
@@ -62,14 +67,16 @@ text {
     left: 0;
     right: 0;
     visibility: hidden;
-    font-size: 14px;
+    font-size: 12px;
+    width:auto;
     max-width: 180px;
   p{
     margin:0;
     font-size:13px;
   }
   @include breakpoint(phablet) {
-    max-width:400px;
+    width:auto;
+    max-width:300px;
   }
 }
 
