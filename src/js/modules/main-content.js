@@ -15,8 +15,8 @@ var nodes = {};
 
 // Compute the distinct nodes from the links.
 links.forEach(function(link) {
-    link.source = nodes[link.source] || (nodes[link.source] = {name: link.source, image : link.image, type : link.type, parent : link.parent})
-    link.target = nodes[link.target] || (nodes[link.target] = {name: link.target, image : link.image, type : link.type, parent : link.parent})
+    link.source = nodes[link.source] || (nodes[link.source] = {name: link.source, image : link.image, type : link.type, x : link.x, y : link.y})
+    link.target = nodes[link.target] || (nodes[link.target] = {name: link.target, image : link.image, type : link.type, x : link.x, y : link.y})
 });
 
 console.log(links)
@@ -24,13 +24,14 @@ console.log(links)
 var force = d3.layout.force()
     .nodes(d3.values(nodes))
     .links(links)
-    .size([width/2, height/2])
-    .linkDistance(width/4)
-    .linkStrength(0.1)
-    .charge(-60)
-    .gravity(0.02)
+    .size([width, height])
+    .linkDistance(width/2)
+    // .linkStrength(0.1)
+    .charge(-100)
+    // .gravity(0.02)
     .on("tick", tick)
     .start();
+    console.log(d3.values(nodes))
 
 var svg = d3.select("#area2").append("svg")
     .attr("width", width)
@@ -58,13 +59,13 @@ var tip = d3.select("#area2")
           } else {
             posX += 10;
           }
-          tip.attr('style', `visibility: visible; left: ${posX}px; top: ${posY}px`);
-        };
-      }
-      force.stop()         
-    }
+            tip.attr('style', `visibility: visible; left: ${posX}px; top: ${posY}px`);
+            };
+            }
+            force.stop()         
+        }
 
-    tip.hide = function(){
+    tip.hide = function() {
         tip.style("visibility", "hidden");
         force.start()  
     }
@@ -82,15 +83,28 @@ var tip = d3.select("#area2")
 //     .attr("orient", "auto")
 //     .append("svg:path")
 //     .attr("d", "M0,-5L10,0L0,5")
-    
+
+var linkedByIndex = {};
+    links.forEach(function(d) {
+        linkedByIndex[d.source.index + "," + d.target.index] = 1;
+    });
+
+    function isConnected(a, b) {
+        return linkedByIndex[a.index + "," + b.index] || linkedByIndex[b.index + "," + a.index] || a.index == b.index;
+    }
+
+var link = svg.selectAll(".link")
+    .data(force.links())
+  .enter().append("line")
+    .attr("class", "link");
 
 // add the links and the arrows
-var path = svg.append("svg:g").selectAll("path")
-    .data(force.links())
-    .enter().append("svg:path")
-    .attr("class", function(d) { return "link " + d.source.parent})
+// var path = svg.append("svg:g").selectAll("path")
+//     .data(force.links())
+//     .enter().append("svg:path")
+//     .attr("class", function(d) { return "link " + d.source.parent})
 
-    console.log(force.links())
+console.log(force.links())
     
 // define the nodes
 var node = svg.selectAll(".node")
@@ -121,41 +135,79 @@ node.append("image")
           .attr("height", 16)
           .on("mouseover", tip.show)
           .on("mouseout", tip.hide)
-          .on("click", click)
+          .on("click", click(0.5))
 
 // add the text 
 node.append("text")
     .attr("x", 12)
     .attr("dy", ".35em")
-    .text(function(d) { return d.name; })
+    .text(function(d) { 
+        return d.name; })
 
 
 // add the curvy lines
 function tick() {
-    path.attr("d", function(d) {
-        var dx =  d.source.x - d.target.x,
-            dy = d.source.y - d.target.y,
-            dr = Math.sqrt(dx * dx + dy * dy);
-        return "M" + 
-            d.source.x + "," + 
-            d.source.y + "A" + 
-            dr + "," + dr + " 0 0,1 " + 
-            d.target.x + "," + 
-            d.target.y;
-    })
+    // path.attr("d", function(d) {
+    //     var dx =  d.source.x - d.target.x,
+    //         dy = d.source.y - d.target.y,
+    //         dr = Math.sqrt(dx * dx + dy * dy);
+    //     return "M" + 
+    //         d.source.x + "," + 
+    //         d.source.y + "A" + 
+    //         dr + "," + dr + " 0 0,1 " + 
+    //         d.target.x + "," + 
+    //         d.target.y;
+    // })
+
+    link
+      .attr("x1", function(d) { return d.source.x; })
+      .attr("y1", function(d) { return d.source.y; })
+      .attr("x2", function(d) { return d.target.x; })
+      .attr("y2", function(d) { return d.target.y; });
 
     node
+        .attr("cx", function(d){
+            return d.x
+        })
+        .attr("cy", function(d){
+            return d.y
+        })
         .attr("transform", function(d) { 
-          return "translate(" + d.x + "," + d.y + ")"; })        
+          return "translate(" + d.x + "," + d.y + ")"; })
+        .call(force.drag)        
 }
 
-function click(d) {
+function click(opacity) {
     // while (d.parent) {
     //     d3.selectAll(".link").classed("link-click", false);
     //     d3.selectAll(".link"+ "."+d.parent).classed("link-click", true);        
     //     d = d.parent;
     // }
-    console.log($(this).prev())
+
+    return function(d) {
+
+            node.style("stroke-opacity", function(o) {
+                thisOpacity = isConnected(d, o) ? 1 : opacity;
+                this.setAttribute('fill-opacity', thisOpacity);
+               
+                return thisOpacity;
+            });
+
+            d3.selectAll(".link")
+                .style("stroke-opacity", function(o) {
+                    return o.source === d || o.target === d ? 1 : opacity;    
+                })
+                .style("stroke-width", function(o) {
+                    return o.source === d || o.target === d ? 2 : 1;                
+                });
+
+            d3.selectAll(".link > text")
+                .style("font", function(o) {
+                    return o.source === d || o.target === d ? "bold 13px sans-serif" : "13px sans-serif";    
+                })
+        };
+ 
+
 
 }
 
