@@ -292,6 +292,9 @@ var json = (function () {
         target: "Guido Aguila",
         x:550,
         y:900       
+      },
+      { source: "Antonio Camayo Valverde (IZA Motors)", 
+        target: "Jacques Rodrich (Farenet)"
       }
     ];
     return links;

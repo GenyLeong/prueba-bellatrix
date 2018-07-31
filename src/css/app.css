@@ -823,6 +823,9 @@ a[href^="tel"] {
   .MainContent .link-click {
     stroke: #000;
     stroke-width: 2px; }
+  .MainContent .text-click text {
+    font: bold 13px sans-serif;
+    fill: #000; }
   .MainContent circle {
     fill: #ccc;
     stroke: #fff;

@@ -135,7 +135,7 @@ node.append("image")
           .attr("height", 16)
           .on("mouseover", tip.show)
           .on("mouseout", tip.hide)
-          .on("click", click(0.5))
+          .on("click", click(0.6))
 
 // add the text 
 node.append("text")
@@ -183,15 +183,23 @@ function click(opacity) {
     //     d3.selectAll(".link"+ "."+d.parent).classed("link-click", true);        
     //     d = d.parent;
     // }
+    // var select = d3.select(this)
 
     return function(d) {
 
-            node.style("stroke-opacity", function(o) {
+        
+
+            node.style("opacity", function(o) {
                 thisOpacity = isConnected(d, o) ? 1 : opacity;
                 this.setAttribute('fill-opacity', thisOpacity);
                
                 return thisOpacity;
-            });
+            })
+            .classed("text-click", function(o){
+                return isConnected(d, o) ? true : false;
+                // return o.source === d || o.target === d ? true : false;
+            })
+
 
             d3.selectAll(".link")
                 .style("stroke-opacity", function(o) {
@@ -199,12 +207,19 @@ function click(opacity) {
                 })
                 .style("stroke-width", function(o) {
                     return o.source === d || o.target === d ? 2 : 1;                
-                });
-
-            d3.selectAll(".link > text")
-                .style("font", function(o) {
-                    return o.source === d || o.target === d ? "bold 13px sans-serif" : "13px sans-serif";    
                 })
+                .classed("link-click", function(o){
+                    return o.source === d || o.target === d ? true : false;
+                })
+
+
+
+                
+
+            // d3.selectAll(".link > text")
+            //     .style("font", function(o) {
+            //         return o.source === d || o.target === d ? "bold 13px sans-serif" : "13px sans-serif";    
+            //     })
         };
  
 
